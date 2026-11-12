@@ -1,0 +1,17 @@
+name: Bug report
+description: Report a reproducible problem using synthetic data
+body:
+  - type: input
+    id: version
+    attributes:
+      label: Version and client
+      description: Skill release, host client, OS, and Python version if relevant
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps and observed behavior
+      description: Include a minimal synthetic reproduction and expected behavior. Do not share real case evidence, personal data, or secrets.
+    validations:
+      required: true

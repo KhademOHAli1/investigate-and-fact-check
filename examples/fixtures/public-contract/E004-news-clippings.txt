@@ -1,0 +1,5 @@
+SYNTHETIC FIXTURE. No real publications or articles.
+Aster Herald, 2026-03-26: "Borough paid EUR 200000." Source: municipal announcement MA-17.
+Quay Observer, 2026-03-27: "Borough paid EUR 200000." Source: municipal announcement MA-17, citing Aster Herald.
+Underlying announcement MA-17, 2026-03-26: "Project authorisation reaches EUR 200000 after approved amendment."
+No reporter inspected a payment ledger, according to these fixture records.

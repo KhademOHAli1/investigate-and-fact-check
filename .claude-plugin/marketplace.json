@@ -1,0 +1,16 @@
+{
+  "name": "investigation-skills",
+  "owner": {
+    "name": "KhademOHAli1"
+  },
+  "plugins": [
+    {
+      "name": "investigate-and-fact-check",
+      "source": {
+        "source": "github",
+        "repo": "KhademOHAli1/investigate-and-fact-check"
+      },
+      "description": "Investigative research and fact-checking with source tracing, evidence logs, and publication review."
+    }
+  ]
+}
