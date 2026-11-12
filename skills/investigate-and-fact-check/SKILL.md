@@ -5,7 +5,7 @@ license: MIT
 compatibility: A skills-compatible agent with file access; web access for current research. Python 3.10+ is needed only for the optional evidence manifest helper.
 metadata:
   author: KhademOHAli1
-  version: "1.0.0"
+  version: "1.0.1"
   repository: https://github.com/KhademOHAli1/investigate-and-fact-check
 ---
 

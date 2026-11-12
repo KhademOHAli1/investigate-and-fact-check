@@ -17,7 +17,7 @@ This repository contains one complete skill, its templates and references, a loc
 Download a versioned ZIP from [Releases](https://github.com/KhademOHAli1/investigate-and-fact-check/releases/latest), or clone the repository:
 
 ```sh
-git clone --branch v1.0.0 https://github.com/KhademOHAli1/investigate-and-fact-check.git
+git clone --branch v1.0.1 https://github.com/KhademOHAli1/investigate-and-fact-check.git
 cd investigate-and-fact-check
 ```
 

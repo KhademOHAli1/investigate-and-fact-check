@@ -6,7 +6,7 @@ This page records public submission outcomes. A submission or pull request is no
 
 | Destination | Route | Status |
 | --- | --- | --- |
-| GitHub | Public repository and versioned release | Public repository; v1.0.0 release being prepared |
+| GitHub | Public repository and versioned release | Public repository; v1.0.1 release being prepared |
 | AgentSkill.sh | [Repository import](https://agentskill.sh/submit) | Not yet submitted |
 | OmniSkill | [Repository import](https://omniskill.online/) | Not yet submitted |
 | Agent Skill Exchange | [Contribution PR](https://github.com/agentskillexchange/skills/blob/main/CONTRIBUTING.md) | Not yet submitted |

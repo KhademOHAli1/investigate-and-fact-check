@@ -1,6 +1,6 @@
 {
   "name": "investigate-and-fact-check",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Evidence-led investigative research, fact-checking, and OSINT workflows with reusable templates and an evidence-manifest helper.",
   "author": {
     "name": "KhademOHAli1",
@@ -9,5 +9,11 @@
   "homepage": "https://github.com/KhademOHAli1/investigate-and-fact-check",
   "repository": "https://github.com/KhademOHAli1/investigate-and-fact-check",
   "license": "MIT",
-  "keywords": ["investigation", "fact-checking", "osint", "journalism", "evidence"]
+  "keywords": [
+    "investigation",
+    "fact-checking",
+    "osint",
+    "journalism",
+    "evidence"
+  ]
 }

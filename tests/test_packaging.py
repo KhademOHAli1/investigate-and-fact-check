@@ -66,9 +66,9 @@ class PackagingTests(unittest.TestCase):
                 self.assertEqual(expected_variant, actual)
                 self.assertEqual(license_bytes, archive.read(f"{SKILL}/LICENSE"))
                 entrypoint = archive.read(f"{SKILL}/SKILL.md").decode("utf-8")
-                self.assertRegex(entrypoint, rf"(?m)^name: {SKILL}$")
+                self.assertIn(f"name: {SKILL}", entrypoint.splitlines())
                 self.assertRegex(entrypoint, r"(?m)^description: .+")
-                self.assertRegex(entrypoint, r"(?m)^license: MIT$")
+                self.assertIn("license: MIT", entrypoint.splitlines())
                 self.assertEqual(variant == "codex", f"{SKILL}/agents/openai.yaml" in archive.namelist())
                 for name in archive.namelist():
                     relative = name.removeprefix(f"{SKILL}/")
