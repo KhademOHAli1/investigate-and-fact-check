@@ -10,14 +10,14 @@
 
 Turn a claim into a traceable assessment: inspect original evidence, test alternative explanations, distinguish independent sources, and explain what remains unknown. Use a focused check for a narrow question or a full evidence register for a substantial investigation.
 
-This repository contains one complete skill, its templates and references, a local evidence-manifest helper, and distribution packages for Codex, Claude, and Mistral. The methodology stays the same across platforms; the installation instructions and optional UI metadata differ.
+This repository contains one complete skill, its templates and references, and optional local case tools for persistent records, evidence registration, provenance logs, collection, checkpoints, and reports. Packages are available for Codex, Claude, Mistral, and other Agent Skills clients. The methodology stays the same across platforms; the installation instructions and optional UI metadata differ.
 
 ## Install
 
 Download a versioned ZIP from [Releases](https://github.com/KhademOHAli1/investigate-and-fact-check/releases/latest), or clone the repository:
 
 ```sh
-git clone --branch v1.0.1 https://github.com/KhademOHAli1/investigate-and-fact-check.git
+git clone --branch v1.1.0 https://github.com/KhademOHAli1/investigate-and-fact-check.git
 cd investigate-and-fact-check
 ```
 
@@ -28,6 +28,7 @@ cd investigate-and-fact-check
 | Claude web / Desktop | Upload the Claude skill ZIP where custom Skills are available | [Claude](docs/claude.md) |
 | Mistral Vibe Code | Native Agent Skill | [Mistral](docs/mistral.md) |
 | Mistral Vibe Work | Skill editor with supporting files | [Mistral](docs/mistral.md) |
+| Gemini CLI, GitHub Copilot, Cursor, OpenCode | Generic `agent-skills` bundle in a documented skills directory | [Other harnesses](docs/agent-harnesses.md) |
 
 For clients supported by the community Skills CLI:
 
@@ -60,11 +61,43 @@ See the [synthetic worked example](examples/focused-fact-check.md) for a complet
 ## What is included
 
 - **Four modes:** focused fact-check, media verification, full investigation, and publication review.
-- **Five reference modules:** investigation method, OSINT playbook, evidence and source security, editorial review, and original method sources.
+- **Reference modules:** investigation method, OSINT playbook, evidence and source security, editorial review, original method sources, and the case-tool and connector guides.
 - **Twelve templates:** case brief; claim, source, evidence, search, correction, timeline, entity, and hypothesis logs; media verification; right of reply; and investigation report. An icon asset is also included.
 - **Evidence helper:** create and compare local SHA-256 baselines using Python's standard library.
+- **Case workspaces:** persistent records and stable IDs, preserved originals, linked sources/evidence/claims, duplicate detection, and cross-record checks.
+- **Repeatable work:** structured collection runs, complete case checkpoints, and CSV/JSON/Markdown exports.
+- **Optional collection:** certificate-transparency and public GitHub repository adapters, plus a local Recon-ng JSON/CSV importer. Collected rows remain unverified leads.
 
-The skill distinguishes observation, assertion, inference, and unknowns. It treats repeated reporting from one origin as one evidence stream, keeps contrary evidence, and requires authorization for external contact or publication. It does not grant browsing tools, establish authenticity from a hash, or replace accountable editorial and legal judgment.
+The skill distinguishes observation, assertion, inference, and unknowns. It treats repeated reporting from one origin as one evidence stream, keeps contrary evidence, and requires authorization for external contact or publication. It does not establish authenticity from a hash or replace accountable editorial and legal judgment. The local case tools use Python 3.10+ and its standard library. Network adapters run only when explicitly invoked.
+
+## Persistent case tools
+
+Keep investigation data in a separate case directory. The commands below work from a repository checkout; an installed skill contains the same `scripts/` directory.
+
+```sh
+CASE_TOOL=skills/investigate-and-fact-check/scripts/case.py
+python3 "$CASE_TOOL" case init /path/to/my-case --title "Public-interest investigation"
+python3 "$CASE_TOOL" source add --case /path/to/my-case \
+  --locator https://example.com/original --name "Original record"
+python3 "$CASE_TOOL" evidence add --case /path/to/my-case \
+  --file /path/to/original.pdf --source-id S001 --method local-file
+python3 "$CASE_TOOL" case check /path/to/my-case
+python3 "$CASE_TOOL" case report /path/to/my-case --output /path/to/case-report.md
+```
+
+Evidence registration copies the original into the case, calculates its hash, and records its source and collection method. Repeated bytes can share stored content while retaining separate observations. Case checks find broken references, missing or changed originals, and other consistency problems. They do not decide whether a claim is true.
+
+See [Case tools](skills/investigate-and-fact-check/references/case-tools.md) for claims, entities, exports, checkpoints, restore, and exit codes. See [Source connectors](skills/investigate-and-fact-check/references/source-connectors.md) for request limits, cache provenance, required inputs, and importing Recon-ng data.
+
+```sh
+python3 "$CASE_TOOL" collect list
+python3 "$CASE_TOOL" collect run --case /path/to/my-case \
+  --adapter certificate-transparency --input example.com
+python3 "$CASE_TOOL" recon import --case /path/to/my-case \
+  --file /path/to/recon-export.json
+```
+
+The importer reads supplied data without installing or running Recon-ng. It preserves the export and records selected domain, host, and repository rows as leads. Missing original provenance stays unknown. Reports retain contrary evidence and unresolved questions; collection success never assigns a supported verdict.
 
 ## Evidence manifest
 
@@ -88,9 +121,9 @@ python3 -m unittest discover -s tests -v
 python3 tools/build_dist.py
 ```
 
-Release builds produce three self-contained skill ZIPs, a Claude plugin ZIP, and `SHA256SUMS`. Build timestamps and ordering are fixed so identical source produces identical archives. [Release process](docs/releasing.md) describes the checks.
+Release builds produce four self-contained skill ZIPs (Codex, Claude, Mistral Vibe, generic Agent Skills), a Claude plugin ZIP, and `SHA256SUMS`. Build timestamps and ordering are fixed so identical source produces identical archives. [Release process](docs/releasing.md) describes the checks.
 
-Validation covers file structure, local links, metadata, packaging, and the evidence helper's behavior. Platform documentation was checked on 12 November 2026. A native Codex CLI invocation was exercised with synthetic evidence. Claude and Mistral runtime activation remain untested; see [compatibility and validation](docs/compatibility.md).
+Validation covers the case workflow, evidence integrity, connector failure paths, and execution from each extracted package. A native Codex CLI run registered synthetic evidence and produced a case report. Claude, Mistral, and the other documented harnesses were checked at the package and installation-guide level. See [compatibility and validation](docs/compatibility.md).
 
 ## Contribute
 
@@ -98,4 +131,4 @@ Read [CONTRIBUTING.md](CONTRIBUTING.md). Reproducible bug reports, improvements 
 
 ## License and attribution
 
-[MIT](LICENSE), copyright 2026 Ali ([KhademOHAli1](https://github.com/KhademOHAli1)). The original skill was supplied by the maintainer and adapted for this public release. [Method sources](skills/investigate-and-fact-check/references/method-sources.md) credits the external guidance behind the editorial synthesis. Linked publications, trademarks, and third-party tools retain their own rights. This is an independent community project.
+[MIT](LICENSE), copyright 2026 Ali ([KhademOHAli1](https://github.com/KhademOHAli1)). The original skill was supplied by the maintainer and adapted for this public release. [Method sources](skills/investigate-and-fact-check/references/method-sources.md) credits the external guidance behind the editorial synthesis. The workspace and modular-collection design was informed by studying [Recon-ng](https://github.com/lanmaster53/recon-ng); the case tools are an original implementation and contain no vendored Recon-ng code. Linked publications, trademarks, and third-party tools retain their own rights. This is an independent community project.

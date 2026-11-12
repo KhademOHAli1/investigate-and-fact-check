@@ -28,7 +28,8 @@ def main():
     name = metadata.get("name", "")
     require(name == SKILL.name and len(name) <= 64 and re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", name), "Invalid skill name")
     require(isinstance(metadata.get("description"), str) and 1 <= len(metadata["description"]) <= 1024, "Invalid description")
-    require(isinstance(metadata.get("compatibility"), str) and len(metadata["compatibility"]) <= 500, "Invalid compatibility")
+    if "compatibility" in metadata:
+        require(isinstance(metadata["compatibility"], str) and 1 <= len(metadata["compatibility"]) <= 500, "Invalid compatibility")
     require(metadata.get("license") == "MIT", "Missing MIT license metadata")
     require(isinstance(metadata.get("metadata"), dict) and all(isinstance(k, str) and isinstance(v, str) for k, v in metadata["metadata"].items()), "Metadata must map strings to strings")
     require(metadata["metadata"].get("version") == version, "Skill version differs from VERSION")
@@ -42,6 +43,10 @@ def main():
     require(plugin["name"] == name and plugin["version"] == version, "Claude plugin metadata differs")
     marketplace = json.loads((ROOT / ".claude-plugin/marketplace.json").read_text())
     require(any(p["name"] == name for p in marketplace["plugins"]), "Marketplace does not declare plugin")
+    for relative in ("scripts/case.py", "scripts/casekit/__init__.py", "scripts/casekit/store.py", "scripts/casekit/connectors.py"):
+        require((SKILL / relative).is_file(), f"Missing bundled case-tool component: {relative}")
+    for path in sorted((SKILL / "scripts").rglob("*.py")):
+        compile(path.read_text(encoding="utf-8"), str(path.relative_to(SKILL)), "exec")
 
     links = 0
     for path in sorted(ROOT.rglob("*.md")):
@@ -62,12 +67,13 @@ def main():
             rows = list(csv.reader(stream))
         require(rows and len(rows[0]) == len(set(rows[0])) and all(rows[0]), f"Invalid CSV header: {path.name}")
         require(all(not any(row) or len(row) == len(rows[0]) for row in rows[1:]), f"Inconsistent CSV columns: {path.name}")
+        require(not any(any(value.strip() for value in row) for row in rows[1:]), f"Reusable CSV template contains case records: {path.name}")
     print(f"Validated {name} v{version}: metadata, {links} local links, {len(templates)} CSV templates, and licenses.")
 
 
 if __name__ == "__main__":
     try:
         main()
-    except (ValueError, KeyError, OSError, yaml.YAMLError) as error:
+    except (ValueError, KeyError, OSError, SyntaxError, yaml.YAMLError) as error:
         print(f"Validation failed: {error}", file=sys.stderr)
         sys.exit(1)

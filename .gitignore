@@ -6,3 +6,7 @@ dist/
 .env
 .env.*
 !.env.example
+cases/
+*.sqlite3
+*.sqlite3-wal
+*.sqlite3-shm

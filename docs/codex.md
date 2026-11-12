@@ -7,7 +7,7 @@ The canonical folder is a native Agent Skill. It includes `agents/openai.yaml` f
 Ask the built-in installer:
 
 ```text
-$skill-installer install https://github.com/KhademOHAli1/investigate-and-fact-check/tree/v1.0.1/skills/investigate-and-fact-check
+$skill-installer install https://github.com/KhademOHAli1/investigate-and-fact-check/tree/v1.1.0/skills/investigate-and-fact-check
 ```
 
 Restart Codex if the new skill does not appear in its skill picker.

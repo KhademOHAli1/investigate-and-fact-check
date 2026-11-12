@@ -4,7 +4,9 @@
 from __future__ import annotations
 
 import argparse
+import csv
 import hashlib
+import io
 from pathlib import Path
 import re
 import stat
@@ -13,7 +15,9 @@ import zipfile
 
 SKILL_NAME = "investigate-and-fact-check"
 ARCHIVE_TIME = (2020, 1, 1, 0, 0, 0)
-VARIANTS = ("codex", "claude", "mistral-vibe")
+VARIANTS = ("codex", "claude", "mistral-vibe", "agent-skills")
+CASE_DIRECTORIES = {"originals", "derivatives", "analysis", "logs", "publication", "checkpoints", "cases"}
+CASE_FILENAMES = {"case.json", "case.db", "case.sqlite3", "data.db", "case-records.json", "checkpoint-manifest.json", "runs.jsonl", "events.jsonl"}
 
 
 def _public_files(directory: Path) -> list[Path]:
@@ -31,6 +35,14 @@ def _public_files(directory: Path) -> list[Path]:
             continue
         if not path.is_file():
             raise ValueError(f"Refusing non-regular release input: {path}")
+        if (any(part in CASE_DIRECTORIES for part in relative.parts[:-1])
+                or path.name.lower() in CASE_FILENAMES
+                or path.suffix.lower() in {".db", ".sqlite", ".sqlite3", ".zip"}
+                or path.name.endswith(("-wal", "-shm", "-journal"))):
+            raise ValueError(f"Case data or an archive must not be bundled in a release: {relative}")
+        with path.open("rb") as stream:
+            if stream.read(16) == b"SQLite format 3\x00":
+                raise ValueError(f"SQLite case data must not be bundled in a release: {relative}")
         result.append(path)
     return result
 
@@ -59,6 +71,11 @@ def build(repository: Path, output_dir: Path) -> list[Path]:
         path.relative_to(skill_dir).as_posix(): path.read_bytes()
         for path in _public_files(skill_dir)
     }
+    for name, content in skill_files.items():
+        if name.startswith("assets/") and name.endswith(".csv"):
+            rows = list(csv.reader(io.StringIO(content.decode("utf-8"))))
+            if any(any(value.strip() for value in row) for row in rows[1:]):
+                raise ValueError(f"Filled case templates must not be bundled in a release: {name}")
     # The repository license is authoritative even if a bundled copy is stale.
     skill_files["LICENSE"] = license_bytes
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -97,6 +114,7 @@ def build(repository: Path, output_dir: Path) -> list[Path]:
     sums.write_text(
         "".join(f"{hashlib.sha256(path.read_bytes()).hexdigest()}  {path.name}\n" for path in sorted(built)),
         encoding="utf-8",
+        newline="\n",
     )
     return [*built, sums]
 

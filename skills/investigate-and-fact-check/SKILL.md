@@ -2,10 +2,9 @@
 name: investigate-and-fact-check
 description: Conduct public-interest investigative journalism, rigorous fact-checking, and open-source intelligence (OSINT) research. Use for verifying claims, quotes, documents, photographs, video, audio, statistics, and online narratives; investigating public institutions, companies, procurement, ownership, and documented relationships; reconstructing events; or reviewing an investigation before publication. Apply hypothesis testing, source tracing, independent corroboration, geolocation, chronolocation, public-record research, reproducible analysis, evidence preservation, and clear uncertainty. Produce sourced findings, claim and evidence logs, investigative dossiers, and draft questions for a right of reply.
 license: MIT
-compatibility: A skills-compatible agent with file access; web access for current research. Python 3.10+ is needed only for the optional evidence manifest helper.
 metadata:
   author: KhademOHAli1
-  version: "1.0.1"
+  version: "1.1.0"
   repository: https://github.com/KhademOHAli1/investigate-and-fact-check
 ---
 
@@ -32,9 +31,13 @@ Scale effort to the stakes and complexity. Do not turn a simple arithmetic check
 - Read [OSINT playbook](references/osint-playbook.md) before selecting search, archive, visual, corporate, technical, or quantitative methods.
 - Read [Evidence and source security](references/evidence-and-security.md) before handling files, confidential material, or a case evidence register.
 - Read [Editorial and legal review](references/editorial-and-legal.md) for allegations, source contact, publication, corrections, and jurisdiction questions.
+- Read [Case tools](references/case-tools.md) when a case needs persistent records, evidence registration, integrity checks, checkpoints, or generated reports.
+- Read [Source connectors](references/source-connectors.md) before using optional public-source adapters or importing Recon-ng exports.
 - Use [Method sources](references/method-sources.md) to consult original guidance and current tool documentation. Treat its date as a reference-list snapshot, not a promise of permanent accuracy.
 
 Copy only relevant templates from assets. Never place case evidence, personal information, credentials, or source identities inside this reusable skill.
+
+The optional case tools and collectors require Python 3.10 or newer and file access. Use available research tools for live checks. Continue with the templates when local command execution is unavailable.
 
 ## Apply these rules throughout
 
@@ -82,6 +85,8 @@ Keep [search-log.csv](assets/search-log.csv) for meaningful queries, coverage li
 Assign stable evidence IDs and retain enough surrounding context to avoid distortion. Record the origin, retrieval time, asserted dates, custody information, and collection limitations.
 
 Keep collected originals untouched. Make derivatives for OCR, transcription, translation, cropping, annotation, and analysis. Use [source-ledger.csv](assets/source-ledger.csv) and [evidence-log.csv](assets/evidence-log.csv) for cases requiring an audit trail.
+
+Use the optional case CLI to register originals with stable evidence IDs and hashes, preserve source and claim links, and record actual collection runs. Treat collector and Recon-ng rows as unverified leads until the underlying proposition is checked. Keep repeated observations and origin groups distinct when files or entities are duplicates.
 
 Use the optional local manifest helper for file collections. A matching SHA-256 digest verifies bytes against a baseline; it does not authenticate the content or establish a full chain of custody. Apply the instructions in the evidence module.
 
