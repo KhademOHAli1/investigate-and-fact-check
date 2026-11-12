@@ -6,11 +6,15 @@ This page records public submission outcomes. A submission or pull request is no
 
 | Destination | Route | Status |
 | --- | --- | --- |
-| GitHub | Public repository and versioned release | Public repository; v1.0.1 release being prepared |
-| AgentSkill.sh | [Repository import](https://agentskill.sh/submit) | Not yet submitted |
-| OmniSkill | [Repository import](https://omniskill.online/) | Not yet submitted |
-| Agent Skill Exchange | [Contribution PR](https://github.com/agentskillexchange/skills/blob/main/CONTRIBUTING.md) | Not yet submitted |
-| The Skills Directory | [Contribution PR](https://github.com/theskillsdirectory/skills/blob/main/CONTRIBUTING.md) | Eligibility and test evidence under review |
-| skills.sh | [Installation-based discovery](https://skills.sh/docs/faq) | No manual submission route; listing not yet verified |
+| GitHub | Public repository and [releases](https://github.com/KhademOHAli1/investigate-and-fact-check/releases) | Published under MIT |
+| Agent Skill Exchange | [Submission PR #157](https://github.com/agentskillexchange/skills/pull/157) | Submitted; awaiting maintainer review |
+| The Skills Directory | [Submission PR #16](https://github.com/theskillsdirectory/skills/pull/16) | Submitted; awaiting maintainer review |
+| Claude Skills Registry | [Source-intake issue #446](https://github.com/majiayu000/claude-skill-registry-core/issues/446) | Submitted; awaiting maintainer review |
+| AgentSkill.sh | [Repository import](https://agentskill.sh/submit) | Repository scan found the skill but failed to import; direct-file fallback returned Server Error |
+| OmniSkill | [Repository import](https://omniskill.online/) | Attempted; the service returned a network / malformed JSON error |
+| skills.sh | [Installation-based discovery](https://skills.sh/docs/faq) | Skills CLI 1.8.1 successfully installed the public repository in an isolated project; public listing not confirmed |
+| AwesomeSkills | [Submit form](https://www.awesomeskills.dev/en/submit) | Not submitted; the form's Turnstile challenge prevented submission |
 
 Directory requirements were reviewed on 12 November 2026. Curated lists that require established community usage, minimum stars, or an older repository are deferred until the project meets those conditions.
+
+The two contribution PRs package the valid initial 1.0.0 skill. Version 1.0.1 fixes repository line-ending handling and a Windows packaging-test assertion; it does not change the investigation workflow or evidence helper. The registry intake includes its scanner result: one skill passed with a catalog-description-length warning. This is a registry-specific schema preference, not a claim of platform certification. No signup, paid placement, or email outreach was performed.

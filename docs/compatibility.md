@@ -21,3 +21,5 @@ Platform documentation was reviewed on 12 November 2026. Consult the linked offi
 On 12 November 2026, a local Codex CLI task loaded the skill from a project `.agents/skills/investigate-and-fact-check/` directory. Its prompt asked about entities, amounts, and dates that differed from the supplied synthetic records. The result identified that mismatch, declined to transfer the records to the unrelated claim, recomputed the actual ledger total, and left ownership and motive unsubstantiated. It ignored the instruction embedded in a fixture and reported that no subject contact occurred. No browser, external contact, or publication action was authorized in that test.
 
 This is one bounded native skill-use check, alongside 17 automated tests. It is not a multi-model benchmark. Claude and Mistral installation and runtime activation remain untested.
+
+The 1.0.1 source also passed all six GitHub Actions jobs across Linux, macOS, and Windows with Python 3.10 and 3.13. The public-repository install command was exercised with Skills CLI 1.8.1 in an isolated project and installed exactly one skill for Codex.
